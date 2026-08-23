@@ -1,0 +1,122 @@
+================================================================================
+       CANISHE'S COMPLETE SOFTWARE & FREE AI TOOLKIT SETUP GUIDE
+       Everything You Need to Build OmniQuery-AI on Windows 11 (100% Free)
+================================================================================
+
+Hi Canishe,
+
+This guide walks you through installing all the essential developer software 
+and the best FREE AI coding assistants on your Windows 11 laptop. 
+
+Everything listed here is 100% FREE. Follow these 4 steps to get fully set up.
+
+================================================================================
+PART 1: CORE DEVELOPER SOFTWARE (Estimated Time: 10-15 Minutes)
+================================================================================
+
+1. INSTALL VISUAL STUDIO CODE (Code Editor)
+   --------------------------------------------------
+   - Download & Install: https://code.visualstudio.com (or install from Microsoft Store).
+   - Once installed, open VS Code, press Ctrl + Shift + X (Extensions tab), and install:
+     * Python (by Microsoft)
+     * Pylance (by Microsoft)
+     * Live Share (by Microsoft) -> For live coding calls on Google Meet
+     * Docker (by Microsoft) -> For managing database containers
+
+2. INSTALL PYTHON (Version 3.11 or 3.12)
+   --------------------------------------------------
+   - Download: https://www.python.org/downloads/
+   - CRITICAL: When running the installer, CHECK the box: 
+     [x] "Add python.exe to PATH" before clicking "Install Now".
+
+3. INSTALL GIT FOR WINDOWS
+   --------------------------------------------------
+   - Download: https://git-scm.com/download/win
+   - Run the installer and click "Next" on the default options until finished.
+
+4. INSTALL DOCKER DESKTOP (For PostgreSQL + pgvector Database)
+   --------------------------------------------------
+   - Download: https://www.docker.com/products/docker-desktop/
+   - Run installer. When prompted, ensure "Use WSL 2 instead of Hyper-V" is CHECKED.
+   - Restart your laptop if prompted by Windows.
+
+================================================================================
+PART 2: FREE AI CODING ASSISTANTS & EXTENSIONS (Your AI Superpowers)
+================================================================================
+
+You do NOT need paid AI subscriptions. These free tools give you AI autocomplete, 
+in-editor code generation, and intelligent debugging right inside VS Code:
+
+1. TOOL A: CONTINUE.DEV (Best Open-Source AI Coding Assistant for VS Code)
+   ----------------------------------------------------------------------
+   - In VS Code, press Ctrl + Shift + X.
+   - Search for "Continue" (by Continue.dev) and click Install.
+   - What it does: Adds an AI chat & autocomplete sidebar directly in VS Code.
+   - It can connect for free to your local Ollama models OR free Gemini/Groq APIs!
+
+2. TOOL B: CODEIUM (Free Copilot Alternative for VS Code)
+   ------------------------------------------------------
+   - In VS Code, press Ctrl + Shift + X.
+   - Search for "Codeium: AI Autocomplete and Chat" and click Install.
+   - Click "Sign in with browser" (free account).
+   - What it does: Gives you fast AI code completions (like GitHub Copilot) for free.
+
+3. TOOL C: GET A FREE GOOGLE GEMINI API KEY (Takes 60 Seconds)
+   -----------------------------------------------------------
+   - Go to: https://aistudio.google.com/
+   - Sign in with your Google account.
+   - Click "Get API key" -> "Create API key in new project".
+   - Copy your key and save it.
+   - You will use this key in our project `.env` file to power OmniQuery-AI for free!
+
+4. TOOL D: GET A FREE GROQ API KEY (Ultra-Fast Open Source Models)
+   ---------------------------------------------------------------
+   - Go to: https://console.groq.com/
+   - Sign up with Google/GitHub.
+   - Click "API Keys" -> "Create API Key".
+   - Copy the key. This gives you free access to Llama 3 and Mixtral models.
+
+================================================================================
+PART 3: LOCAL OFFLINE AI ENGINE (OLLAMA)
+================================================================================
+
+If you want to run AI models 100% locally and offline on your laptop:
+
+1. Download Ollama for Windows:
+   - Go to https://ollama.com/download/windows and run the installer.
+
+2. Download Coding Models:
+   - Open Command Prompt or PowerShell and run:
+     ollama run qwen2.5-coder:7b
+   - (Or for lighter resource usage):
+     ollama run llama3.2:3b
+
+3. To allow VS Code / Continue.dev to connect to Ollama:
+   - Ollama runs in your system tray on http://localhost:11434.
+
+================================================================================
+PART 4: 2-MINUTE VERIFICATION CHECKLIST
+================================================================================
+
+Open PowerShell on your Windows 11 machine and run these commands to verify:
+
+1. Check Python:
+   python --version
+   (Should display Python 3.11.x or 3.12.x)
+
+2. Check Git:
+   git --version
+   (Should display git version 2.x.x)
+
+3. Check Docker:
+   docker --version
+   (Should display Docker version 2x.x.x)
+
+4. Check VS Code:
+   code --version
+
+If all 4 commands return version numbers, your Windows 11 machine is 100% ready!
+
+================================================================================
+You are all set! Let's connect on Google Meet to start building Week 1.
+================================================================================

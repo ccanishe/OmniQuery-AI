@@ -1,0 +1,151 @@
+================================================================================
+          PROJECT KICKOFF & ACTION PLAN: OMNIQUERY-AI
+  Fast-Track Preparation for Junior GenAI / LLM Engineer Roles in Bangalore (2026)
+================================================================================
+
+Hi Canishe,
+
+We analyzed your resume against current 2026 hiring standards for Junior GenAI 
+and LLM Application Engineer roles across top Bangalore tech firms and AI 
+startups (Sarvam AI, Yellow.ai, Krutrim, Fractal, Quantiphi, Tiger Analytics, 
+Bosch, and Cisco).
+
+Your 9.03 CGPA from SRM and your background in Python, FastAPI, and pgvector 
+are strong foundations. However, hiring managers in Bangalore in 2026 look 
+for candidates with proven, production-grade applied GenAI skills rather than 
+basic chatbot scripts.
+
+To make your profile stand out against thousands of applicants, we are building 
+a flagship capstone project together:
+
+  PROJECT NAME: OmniQuery-AI
+  ENTERPRISE STACK: Python 3.11, FastAPI, PostgreSQL + pgvector, LangGraph, 
+                    Cross-Encoder Re-ranker, RAGAS (Evaluation), Docker.
+
+This project is 100% FREE to build, and we can collaborate seamlessly between 
+your Windows 11 laptop (India time) and my MacBook (US Central time).
+
+Follow the step-by-step instructions below to get started.
+
+================================================================================
+STEP 1: ONE-TIME SETUP ON YOUR WINDOWS 11 LAPTOP (10 Minutes)
+================================================================================
+
+1. Install Visual Studio Code:
+   - Open the Microsoft Store on Windows 11, search for "Visual Studio Code", 
+     and click Install (or download from https://code.visualstudio.com).
+
+2. Install Key VS Code Extensions:
+   - Open VS Code.
+   - Press Ctrl + Shift + X (Extensions tab).
+   - Search and install:
+     * "Live Share" (by Microsoft) - for live coding together on Google Meet.
+     * "Python" (by Microsoft).
+
+3. Install Docker Desktop (Optional for local PostgreSQL, Free):
+   - Download and install Docker Desktop for Windows from https://docker.com.
+   - Ensure WSL 2 (Windows Subsystem for Linux) is enabled when prompted.
+
+4. Install Git (if not already installed):
+   - Download from https://git-scm.com/download/win.
+
+================================================================================
+STEP 2: CREATE THE GITHUB REPOSITORY ON YOUR GITHUB ACCOUNT (3 Minutes)
+================================================================================
+
+Having the repository under YOUR GitHub account ensures that all commits show 
+up on your profile heatmap and recruiters see you as the primary author.
+
+1. Log into your GitHub account at https://github.com.
+2. Click the "+" icon at the top right and select "New repository".
+3. Repository name: OmniQuery-AI
+4. Description: Enterprise Hybrid RAG (pgvector + BM25) and Autonomous SQL Copilot with LangGraph & RAGAS Benchmarking.
+5. Visibility: Public (recommended for recruiters) or Private.
+6. Leave "Add a README file" UNCHECKED (we have already written a production README for you).
+7. Click "Create repository".
+8. Add your uncle as a collaborator:
+   - Go to your repository's "Settings" tab.
+   - Click "Collaborators" on the left menu.
+   - Click "Add people" and enter your uncle's GitHub username.
+
+================================================================================
+STEP 3: CLONE AND RUN THE STARTER PROJECT LOCALLY ON WINDOWS 11
+================================================================================
+
+Once the codebase is pushed to GitHub, open your Command Prompt or PowerShell:
+
+1. Clone the project:
+   git clone https://github.com/<YOUR-GITHUB-USERNAME>/OmniQuery-AI.git
+   cd OmniQuery-AI
+
+2. Start the PostgreSQL Database with pgvector:
+   docker-compose up -d
+
+3. Set up your Python Virtual Environment on Windows:
+   python -m venv .venv
+   .\.venv\Scripts\activate
+   pip install -r requirements.txt
+
+4. Configure Environment Variables:
+   copy .env.example .env
+
+5. Run the FastAPI Backend:
+   uvicorn app.main:app --reload --port 8000
+   -> Open Swagger Documentation in your browser: http://localhost:8000/docs
+
+6. Run the Interactive Streamlit Web UI (in a new terminal):
+   .\.venv\Scripts\activate
+   streamlit run ui/streamlit_app.py --server.port 8501
+   -> Open Chat UI in your browser: http://localhost:8501
+
+================================================================================
+STEP 4: HOW WE COLLABORATE ACROSS TIME ZONES (India vs US Central)
+================================================================================
+
+- WHEN WORKING ON YOUR OWN (India Daytime):
+  You write code, test features, and push your progress to GitHub:
+    git add .
+    git commit -m "feat: added PDF chunking logic"
+    git push origin main
+
+- WHEN WORKING TOGETHER ON GOOGLE MEET CALLS:
+  We will use "VS Code Live Share":
+  1. One of us clicks "Live Share" in VS Code and pastes the invite link 
+     into the Google Meet chat.
+  2. The other clicks the link and joins the editor in 1-click.
+  3. We both type, review, and debug the code together in real-time.
+
+================================================================================
+STEP 5: 4-WEEK ROADMAP (MILESTONES)
+================================================================================
+
+- WEEK 1: Core Hybrid Retrieval Engine
+  * Ingest multi-page PDFs with RecursiveCharacterTextSplitter.
+  * Implement Hybrid Search: Dense Vector (pgvector) + Sparse BM25 (tsvector).
+  * Blend scores using Reciprocal Rank Fusion (RRF) and FlashRank Re-ranker.
+
+- WEEK 2: Agentic Routing & Text-to-SQL Copilot
+  * Build safe schema inspection and Text-to-SQL generation on PostgreSQL.
+  * Build LangGraph state machine router to delegate between RAG and SQL.
+
+- WEEK 3: Quality Benchmarking (RAGAS) & Web UI
+  * Write automated evaluation harness with RAGAS (target: >90% Faithfulness).
+  * Polish Streamlit / React UI with real-time token streaming and citation tags.
+
+- WEEK 4: Deployment & Job Application Showcase
+  * Package multi-container Docker Compose.
+  * Deploy live web demo to Hugging Face Spaces (Free).
+  * Update your resume with quantifiable metrics and add GitHub/Live links.
+
+================================================================================
+STEP 6: WHAT RECRUITERS WILL SEE (YOUR PROOF-OF-WORK PACKAGE)
+================================================================================
+
+When you apply to Bangalore companies, you will showcase:
+1. Public GitHub Repo with architecture diagrams, tests, and clean code.
+2. 1-Click Live Hosted Demo Link on Hugging Face Spaces.
+3. RAGAS Benchmark Scorecard (>90% Faithfulness, Zero Hallucinations).
+4. ATS-Optimized Resume Bullet Points highlighting Hybrid RAG & LangGraph.
+
+Let's connect on Google Meet to kick off Week 1!
+================================================================================
