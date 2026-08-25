@@ -17,7 +17,9 @@ Base = declarative_base()
 
 async def init_db():
     """Initializes the database and ensures pgvector extension is created."""
+    import app.models  # Ensure models are registered with Base.metadata
     async with engine.begin() as conn:
         await conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector;"))
         await conn.execute(text("CREATE EXTENSION IF NOT EXISTS pg_trgm;"))
         await conn.run_sync(Base.metadata.create_all)
+

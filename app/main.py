@@ -43,13 +43,13 @@ async def handle_query(request: QueryRequest):
     initial_state = {
         "query": request.query,
         "query_type": None,
-        "context": None,
+        "retrieved_chunks": None,
         "sql_query": None,
         "sql_result": None,
         "response": None
     }
     
-    result = agent_app.invoke(initial_state)
+    result = await agent_app.ainvoke(initial_state)
     return QueryResponse(
         query=request.query,
         route_selected=result.get("query_type", "direct"),
@@ -63,14 +63,15 @@ async def stream_query(request: QueryRequest):
         initial_state = {
             "query": request.query,
             "query_type": None,
-            "context": None,
+            "retrieved_chunks": None,
             "sql_query": None,
             "sql_result": None,
             "response": None
         }
         
-        result = agent_app.invoke(initial_state)
+        result = await agent_app.ainvoke(initial_state)
         response_text = result.get("response", "")
+
         
         # Stream response chunk-by-chunk
         words = response_text.split(" ")

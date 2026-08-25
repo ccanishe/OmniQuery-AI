@@ -31,8 +31,16 @@ flowchart TD
         M7 --> M8
     end
 
+    subgraph Part4 ["Part 4: Deep-Dive Concept Guides"]
+        M9["09. SKUs & Alphanumeric Blindspots"]
+        M10["10. Intent Classification & Routing"]
+        M11["11. RRF Mathematical Worked Examples"]
+        M12["12. PDF Ingestion & Dual Indexing"]
+    end
+
     Part1 --> Part2
     Part2 --> Part3
+    Part3 --> Part4
 ```
 
 ---
@@ -52,7 +60,19 @@ flowchart TD
 
 ---
 
+## 🔬 In-Depth Concept Learning Guides (Created Today)
+
+| Guide | Focus Concept | Key Learnings & Interview Answers | File Link |
+| :---: | :--- | :--- | :--- |
+| **09** | **SKUs & The Alphanumeric Blindspot in AI** | Why vector models confuse `SKU-4001` with `SKU-4002` (0.98 similarity), and how BM25 + SQL eliminates catalog hallucinations. | [09_CONCEPT_SKUS_AND_ALPHANUMERIC_BLINDSPOTS.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/09_CONCEPT_SKUS_AND_ALPHANUMERIC_BLINDSPOTS.md) |
+| **10** | **Intent Classification & Dynamic Routing** | How LangGraph routers decide between RAG and SQL using Keyword Heuristics, Semantic Vector Anchors, and Structured LLM JSON schemas. | [10_CONCEPT_INTENT_CLASSIFICATION_AND_ROUTING.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/10_CONCEPT_INTENT_CLASSIFICATION_AND_ROUTING.md) |
+| **11** | **RRF Math & Worked Examples** | Why raw scores cannot be added, mathematical derivation of $\frac{1}{k+\text{rank}}$, why $k=60$ works, and a 4-document numerical walkthrough. | [11_CONCEPT_RECIPROCAL_RANK_FUSION_WORKED_EXAMPLES.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/11_CONCEPT_RECIPROCAL_RANK_FUSION_WORKED_EXAMPLES.md) |
+| **12** | **Enterprise PDF Ingestion & Dual Indexing** | Page-by-page parsing, 500/50 token chunking, 384-d `all-MiniLM-L6-v2` embeddings, and dual `vector(384)` + `tsvector` PostgreSQL storage. | [12_CONCEPT_PDF_INGESTION_AND_DUAL_INDEXING.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/12_CONCEPT_PDF_INGESTION_AND_DUAL_INDEXING.md) |
+
+---
+
 ## 🎯 High-Level Architecture & Use Cases
 
 * **Project Requirements & Architecture:** [PROJECT_REQUIREMENTS_AND_ARCHITECTURE.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/PROJECT_REQUIREMENTS_AND_ARCHITECTURE.md)
 * **Real-World Use Cases & Target State:** [REAL_WORLD_USE_CASES_AND_TARGET_STATE.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/REAL_WORLD_USE_CASES_AND_TARGET_STATE.md)
+* **Recommended Learning Resources:** [RECOMMENDED_LEARNING_RESOURCES.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/RECOMMENDED_LEARNING_RESOURCES.md)
