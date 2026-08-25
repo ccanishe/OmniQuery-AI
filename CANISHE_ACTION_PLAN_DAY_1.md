@@ -6,8 +6,29 @@
 
 1. **Pull the latest codebase** and understand the **Week 1 Core Retrieval Engine** we pushed today.
 2. **Master the 4 core GenAI concepts** (RRF, SKUs & Alphanumeric Blindspots, Intent Routing, Dual Indexing).
-3. **Execute local database ingestion** (`document_chunks` with `vector` + `tsvector`) and test the **Streamlit Web UI**.
-4. **Build a Database Seeding Script (`app/db_seed.py`)** to populate sample `products`, `customers`, and `orders` for our upcoming Text-to-SQL engine.
+3. **Follow Professional Git Branching Workflow:** Create a dedicated feature branch (`feature/db-seeder-and-live-test`), do all your work on the branch, and submit a **Pull Request (PR)** on GitHub for review!
+4. **Execute local database ingestion** (`document_chunks` with `vector` + `tsvector`) and test the **Streamlit Web UI**.
+5. **Build a Database Seeding Script (`app/db_seed.py`)** to populate sample `products`, `customers`, and `orders` for our upcoming Text-to-SQL engine.
+
+---
+
+## 🌿 Professional Git Branching Workflow (Why This Matters)
+
+In top Bangalore AI product firms (Sarvam AI, Yellow.ai, Krutrim, Bosch, Cisco), **engineers never push directly to `main`**.
+
+Instead, they follow the standard **Feature Branch & Pull Request (PR)** workflow:
+1. `main` branch is kept stable and clean.
+2. Every new task or feature is developed on a separate branch (e.g., `feature/...`).
+3. When ready, the engineer pushes the branch and opens a **Pull Request (PR)** for team review.
+
+```mermaid
+flowchart LR
+    MainOrigin["main (origin)"] -->|"git checkout -b feature/db-seeder"| FeatureBranch["feature/db-seeder (local branch)"]
+    FeatureBranch -->|"Code & Test"| LocalCommits["Local Commits (app/db_seed.py)"]
+    LocalCommits -->|"git push -u origin feature/db-seeder"| RemoteBranch["Remote Feature Branch on GitHub"]
+    RemoteBranch -->|"Create Pull Request (PR)"| PR["GitHub Pull Request"]
+    PR -->|"Review & Merge"| MainFinal["main (Updated & Tested)"]
+```
 
 ---
 
@@ -29,9 +50,9 @@ Open these 4 markdown guides in your VS Code editor. Read each one carefully and
 
 ---
 
-## 💻 Phase 2: Hands-On Technical Tasks
+## 💻 Phase 2: Hands-On Technical Execution
 
-### Task 1: Pull Latest Changes & Run Automated Tests (5 Mins)
+### Step 1: Pull Latest Main & Create Your Feature Branch (5 Mins)
 
 In your Windows 11 terminal (PowerShell / Command Prompt):
 
@@ -39,13 +60,25 @@ In your Windows 11 terminal (PowerShell / Command Prompt):
 # 1. Navigate to your project directory
 cd OmniQuery-AI
 
-# 2. Pull the latest code from GitHub
+# 2. Make sure you are on main and pull the latest codebase
+git checkout main
 git pull origin main
 
-# 3. Activate your virtual environment
+# 3. Create and switch to your new feature branch
+git checkout -b feature/db-seeder-and-live-test
+```
+
+👉 You are now working safely in your isolated branch `feature/db-seeder-and-live-test`!
+
+---
+
+### Step 2: Run Automated Tests (5 Mins)
+
+```bash
+# 1. Activate your virtual environment
 .\.venv\Scripts\activate
 
-# 4. Run the automated Pytest suite
+# 2. Run the automated Pytest suite
 pytest tests/test_hybrid_rag.py -v
 ```
 
@@ -57,7 +90,7 @@ pytest tests/test_hybrid_rag.py -v
 
 ---
 
-### Task 2: Start PostgreSQL & Run Document Ingestion (10 Mins)
+### Step 3: Start PostgreSQL & Run Document Ingestion (10 Mins)
 
 1. Ensure Docker Desktop is running on Windows 11.
 2. Start the PostgreSQL 16 container with `pgvector`:
@@ -72,11 +105,11 @@ pytest tests/test_hybrid_rag.py -v
 
 ---
 
-### Task 3: Build the Relational Database Seeder (`app/db_seed.py`) (30 Mins)
+### Step 4: Build the Relational Database Seeder (`app/db_seed.py`) (30 Mins)
 
 To prepare for our **Week 2 Text-to-SQL Engine**, create a new script named `app/db_seed.py` that populates sample data into the [`customers`](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/app/models.py#L62), [`products`](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/app/models.py#L78), and [`orders`](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/app/models.py#L95) tables.
 
-Create `app/db_seed.py` with the following starter code and run it:
+Create `app/db_seed.py` with the following code and run it:
 
 ```python
 """
@@ -146,7 +179,7 @@ python -m app.db_seed
 
 ---
 
-### Task 4: Run the Backend & Streamlit Web UI (15 Mins)
+### Step 5: Run the Backend & Streamlit Web UI (15 Mins)
 
 1. In Terminal 1, start the FastAPI Backend:
    ```bash
@@ -168,7 +201,41 @@ python -m app.db_seed
 
 ---
 
-## 🎤 Phase 3: Self-Check Interview Quiz (Test Your Understanding)
+## 🚀 Phase 3: Check In Your Changes & Create a Pull Request (PR)
+
+When you have tested your code and verified that `app/db_seed.py` works:
+
+### 1. Stage and Commit on Your Feature Branch
+```bash
+# Check modified & created files
+git status
+
+# Stage the new seeder script
+git add app/db_seed.py
+
+# Commit with a clean conventional commit message
+git commit -m "feat(db): add enterprise database seeder script for products, customers, and orders"
+```
+
+### 2. Push Your Feature Branch to GitHub
+```bash
+git push -u origin feature/db-seeder-and-live-test
+```
+
+### 3. Open a Pull Request (PR) on GitHub
+1. Open your browser and go to your repository on GitHub: `https://github.com/<YOUR-USERNAME>/OmniQuery-AI`.
+2. You will see a yellow banner: **"feature/db-seeder-and-live-test had recent pushes. Compare & pull request"**. Click **Compare & pull request**.
+3. Title: `feat(db): implement database seeder and test local hybrid retrieval`
+4. Description: Write a 2-3 bullet summary of what you did:
+   - *Added `app/db_seed.py` to seed sample products, customers, and orders.*
+   - *Verified `pytest tests/test_hybrid_rag.py` passes 100%.*
+   - *Tested live document retrieval and citation responses in Streamlit UI.*
+5. Click **"Create pull request"**.
+6. Add your uncle as a reviewer.
+
+---
+
+## 🎤 Phase 4: Self-Check Interview Quiz (Test Your Understanding)
 
 Before our next pair-programming call, practice answering these 3 questions out loud:
 
@@ -183,12 +250,4 @@ Before our next pair-programming call, practice answering these 3 questions out 
 
 ---
 
-### 📤 Submission:
-When you finish your tasks, commit and push your `app/db_seed.py` to GitHub:
-```bash
-git add .
-git commit -m "feat(db): add database seed script with sample products, customers, and orders"
-git push origin main
-```
-
-Good luck Canishe! Let's connect on Google Meet for our next session.
+Good luck Canishe! Let's review and merge your PR during our next Google Meet session!
