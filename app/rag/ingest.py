@@ -128,7 +128,7 @@ async def insert_chunks_to_db(chunks: List[Dict[str, Any]]) -> int:
                 document_id, document_name, chunk_index, content, embedding, tsv_content, metadata_json
             ) VALUES (
                 :document_id, :document_name, :chunk_index, :content, 
-                :embedding::vector, 
+                CAST(:embedding AS vector), 
                 to_tsvector('english', :content), 
                 CAST(:metadata_json AS jsonb)
             );
