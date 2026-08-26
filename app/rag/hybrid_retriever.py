@@ -62,9 +62,9 @@ async def hybrid_search_raw(
         # 1. Dense Vector Search (pgvector cosine distance)
         dense_query = text("""
             SELECT id, document_id, document_name, chunk_index, content, metadata_json,
-                   1 - (embedding <=> :vector::vector) AS similarity_score
+                   1 - (embedding <=> CAST(:vector AS vector)) AS similarity_score
             FROM document_chunks
-            ORDER BY embedding <=> :vector::vector
+            ORDER BY embedding <=> CAST(:vector AS vector)
             LIMIT :fetch_limit;
         """)
         

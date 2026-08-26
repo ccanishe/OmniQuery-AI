@@ -8,7 +8,7 @@ load_dotenv()
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL", 
-    "postgresql+asyncpg://omni_user:omni_password@localhost:5432/omniquery_db"
+    "postgresql+asyncpg://omni_user:omni_password@localhost:5433/omniquery_db"
 )
 
 engine = create_async_engine(DATABASE_URL, echo=False)
