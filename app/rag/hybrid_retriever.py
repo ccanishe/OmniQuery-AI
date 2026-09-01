@@ -98,23 +98,28 @@ async def hybrid_search_raw(
 async def retrieve_context(query: str, top_k: int = 3) -> List[Dict[str, Any]]:
     """
     End-to-End Retrieval Pipeline:
-    1. Generates 384-d dense embedding of query.
-    2. Runs hybrid search (Dense + BM25) to fetch top candidate chunks.
-    3. Cross-Encoder re-ranks candidate chunks.
-    4. Returns top_k highest relevance chunks.
+    1. Validates query input.
+    2. Generates 384-d dense embedding of query.
+    3. Runs hybrid search (Dense + BM25) to fetch top candidate chunks.
+    4. Cross-Encoder re-ranks candidate chunks.
+    5. Returns top_k highest relevance chunks.
     """
+    clean_query = query.strip() if query else ""
+    if not clean_query:
+        return []
+
     # 1. Embed query
     model = get_embedding_model()
-    query_vector = model.encode(query, normalize_embeddings=True).tolist()
+    query_vector = model.encode(clean_query, normalize_embeddings=True).tolist()
 
     # 2. Hybrid search with oversampling (fetch 2x candidates)
     candidate_limit = max(top_k * 3, 10)
     fused_candidates = await hybrid_search_raw(
-        query_text=query, 
+        query_text=clean_query, 
         query_embedding=query_vector, 
         candidate_fetch_limit=candidate_limit
     )
 
     # 3. FlashRank Cross-Encoder Re-ranking
-    final_ranked_chunks = rerank_passages(query, fused_candidates, top_n=top_k)
+    final_ranked_chunks = rerank_passages(clean_query, fused_candidates, top_n=top_k)
     return final_ranked_chunks

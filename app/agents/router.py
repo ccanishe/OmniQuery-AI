@@ -23,12 +23,18 @@ class AgentState(TypedDict):
 
 def classify_intent_node(state: AgentState) -> AgentState:
     """Classifies user intent based on keywords and schema detection."""
-    query = state["query"].lower()
+    raw_query = state.get("query") or ""
+    query = raw_query.strip().lower()
     
-    # SQL indicators: numbers, count, sales, revenue, totals, database tables
+    if not query:
+        state["query_type"] = "direct"
+        return state
+    
+    # SQL indicators: numbers, count, sales, revenue, totals, database tables, raw sql
     sql_keywords = [
         "how many", "count", "total", "sales", "revenue", "average", "highest", 
-        "lowest", "list all users", "orders", "customers", "products", "stock"
+        "lowest", "list all users", "orders", "customers", "products", "stock",
+        "select", "from", "drop table", "insert into"
     ]
     
     # Document RAG indicators: explain, policy, guide, summary, what is, how to, return, SLA, error
@@ -65,7 +71,13 @@ async def rag_handler_node(state: AgentState) -> AgentState:
         answer = await synthesize_answer(query, chunks)
         state["response"] = answer
     except Exception as e:
-        state["response"] = f"Error during document retrieval: {str(e)}"
+        # Log error internally for developers/monitoring
+        print(f"[SECURITY ALERT] Retrieval exception logged: {e}")
+        # Return sanitized response to client
+        state["response"] = (
+            "⚠️ We encountered a temporary issue searching the enterprise document knowledge base. "
+            "Our engineering team has been notified. Please try your query again in a moment."
+        )
     return state
 
 
