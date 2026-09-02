@@ -10,6 +10,7 @@ from typing import TypedDict, Literal, Optional, List, Dict, Any
 from langgraph.graph import StateGraph, END
 from app.rag.hybrid_retriever import retrieve_context
 from app.rag.synthesizer import synthesize_answer
+from app.agents.sql_agent import run_text_to_sql_pipeline
 
 
 class AgentState(TypedDict):
@@ -70,13 +71,20 @@ async def rag_handler_node(state: AgentState) -> AgentState:
 
 
 async def sql_handler_node(state: AgentState) -> AgentState:
-    """Executes safe Text-to-SQL query and formats tabular result (Milestone Week 2)."""
-    state["response"] = (
-        f"📊 **[Text-to-SQL Copilot]**\n\n"
-        f"Query analyzed: *\"{state['query']}\"*\n\n"
-        f"```sql\n-- Sample Parameterized SQL for PostgreSQL\nSELECT count(*), status FROM orders GROUP BY status;\n```\n"
-        f"*(Full automated SQL sandbox execution enabled in Week 2)*"
-    )
+    """
+    Executes live Text-to-SQL pipeline:
+    1. Translates natural language into validated PostgreSQL query.
+    2. Executes in read-only sandbox.
+    3. Formats tabular results with Markdown inspection.
+    """
+    query = state["query"]
+    try:
+        sql_query, formatted_response, summary = await run_text_to_sql_pipeline(query)
+        state["sql_query"] = sql_query
+        state["sql_result"] = summary
+        state["response"] = formatted_response
+    except Exception as e:
+        state["response"] = f"⚠️ Error executing database query: {str(e)}"
     return state
 
 
