@@ -73,6 +73,8 @@ flowchart TD
 
 ## 🎯 High-Level Architecture & Use Cases
 
+* **Canishe's Week 2 Retrospective & AGY Mastery Guide:** [CANISHE_WEEK_2_RETROSPECTIVE_AND_AGY_MASTERY_GUIDE.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/CANISHE_WEEK_2_RETROSPECTIVE_AND_AGY_MASTERY_GUIDE.md)
 * **Project Requirements & Architecture:** [PROJECT_REQUIREMENTS_AND_ARCHITECTURE.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/PROJECT_REQUIREMENTS_AND_ARCHITECTURE.md)
 * **Real-World Use Cases & Target State:** [REAL_WORLD_USE_CASES_AND_TARGET_STATE.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/REAL_WORLD_USE_CASES_AND_TARGET_STATE.md)
 * **Recommended Learning Resources:** [RECOMMENDED_LEARNING_RESOURCES.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/RECOMMENDED_LEARNING_RESOURCES.md)
+
