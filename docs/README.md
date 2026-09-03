@@ -68,13 +68,17 @@ flowchart TD
 | **10** | **Intent Classification & Dynamic Routing** | How LangGraph routers decide between RAG and SQL using Keyword Heuristics, Semantic Vector Anchors, and Structured LLM JSON schemas. | [10_CONCEPT_INTENT_CLASSIFICATION_AND_ROUTING.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/10_CONCEPT_INTENT_CLASSIFICATION_AND_ROUTING.md) |
 | **11** | **RRF Math & Worked Examples** | Why raw scores cannot be added, mathematical derivation of $\frac{1}{k+\text{rank}}$, why $k=60$ works, and a 4-document numerical walkthrough. | [11_CONCEPT_RECIPROCAL_RANK_FUSION_WORKED_EXAMPLES.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/11_CONCEPT_RECIPROCAL_RANK_FUSION_WORKED_EXAMPLES.md) |
 | **12** | **Enterprise PDF Ingestion & Dual Indexing** | Page-by-page parsing, 500/50 token chunking, 384-d `all-MiniLM-L6-v2` embeddings, and dual `vector(384)` + `tsvector` PostgreSQL storage. | [12_CONCEPT_PDF_INGESTION_AND_DUAL_INDEXING.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/12_CONCEPT_PDF_INGESTION_AND_DUAL_INDEXING.md) |
+| **13** | **Dual-Engine Generation & Graceful Degradation** | Combining stochastic LLMs (Gemini 1.5 Flash) with deterministic heuristics for 99.9% uptime, $0.00 test automation, and zero vendor lock-in. | [13_CONCEPT_DUAL_ENGINE_GENERATION_AND_GRACEFUL_DEGRADATION.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/13_CONCEPT_DUAL_ENGINE_GENERATION_AND_GRACEFUL_DEGRADATION.md) |
 
 ---
 
-## 🎯 High-Level Architecture & Use Cases
+## 🎯 High-Level Architecture, Retrospectives & Reviews
 
 * **Canishe's Week 2 Retrospective & AGY Mastery Guide:** [CANISHE_WEEK_2_RETROSPECTIVE_AND_AGY_MASTERY_GUIDE.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/CANISHE_WEEK_2_RETROSPECTIVE_AND_AGY_MASTERY_GUIDE.md)
+* **Architect Review: Negative & Edge Testing:** [ARCHITECT_REVIEW_NEGATIVE_AND_EDGE_TESTING.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/review_comments/ARCHITECT_REVIEW_NEGATIVE_AND_EDGE_TESTING.md)
+* **Architect Review: Text-to-SQL Copilot Engine:** [ARCHITECT_REVIEW_TEXT_TO_SQL_COPILOT.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/review_comments/ARCHITECT_REVIEW_TEXT_TO_SQL_COPILOT.md)
 * **Project Requirements & Architecture:** [PROJECT_REQUIREMENTS_AND_ARCHITECTURE.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/PROJECT_REQUIREMENTS_AND_ARCHITECTURE.md)
 * **Real-World Use Cases & Target State:** [REAL_WORLD_USE_CASES_AND_TARGET_STATE.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/REAL_WORLD_USE_CASES_AND_TARGET_STATE.md)
 * **Recommended Learning Resources:** [RECOMMENDED_LEARNING_RESOURCES.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/RECOMMENDED_LEARNING_RESOURCES.md)
+
 
