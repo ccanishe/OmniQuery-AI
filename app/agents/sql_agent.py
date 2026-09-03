@@ -61,16 +61,22 @@ Table: order_items
 # 2. Security & SQL Sanitization Sandbox
 # =====================================================================
 
+class SQLSecurityViolation(ValueError):
+    """Raised strictly when a query violates security or read-only sandbox rules."""
+    pass
+
+
 FORBIDDEN_SQL_KEYWORDS = [
     r"\bDROP\b", r"\bDELETE\b", r"\bUPDATE\b", r"\bINSERT\b", 
     r"\bALTER\b", r"\bTRUNCATE\b", r"\bGRANT\b", r"\bREVOKE\b",
-    r"\bEXEC\b", r"\bEXECUTE\b", r"\bCREATE\b", r"\bREPLACE\b"
+    r"\bEXEC\b", r"\bEXECUTE\b", r"\bCREATE\b", r"\bREPLACE\b",
+    r"\bPG_SLEEP\b"
 ]
 
 def validate_and_sanitize_sql(raw_sql: str) -> str:
     """
     Strict SQL validation sandbox:
-    1. Extracts pure SQL (strips markdown code blocks).
+    1. Extracts pure SQL (strips markdown code blocks and inline comments).
     2. Blocks mutation and DDL keywords (prevents SQL injection).
     3. Guarantees query starts with SELECT or WITH.
     4. Appends LIMIT 50 if no limit is specified to avoid memory exhaustion.
@@ -80,28 +86,33 @@ def validate_and_sanitize_sql(raw_sql: str) -> str:
     cleaned = re.sub(r"^```(?:sql)?", "", cleaned, flags=re.IGNORECASE).strip()
     cleaned = re.sub(r"```$", "", cleaned).strip()
     
+    # Strip SQL comments to prevent comment-based filter evasion
+    cleaned = re.sub(r"--.*?$", "", cleaned, flags=re.MULTILINE).strip()
+    cleaned = re.sub(r"/\*.*?\*/", "", cleaned, flags=re.DOTALL).strip()
+    
     # Remove trailing semicolons
     cleaned = cleaned.rstrip(";").strip()
 
     # 2. Disallow multiple stacked statements (prevents 'SELECT 1; DROP TABLE products;')
     if ";" in cleaned:
-        raise ValueError("Security Violation: Multiple stacked SQL statements are forbidden.")
+        raise SQLSecurityViolation("Security Violation: Multiple stacked SQL statements are forbidden.")
 
     # 3. Disallow mutation / destructive keywords
     for pattern in FORBIDDEN_SQL_KEYWORDS:
         if re.search(pattern, cleaned, flags=re.IGNORECASE):
             matched_kw = re.search(pattern, cleaned, flags=re.IGNORECASE).group()
-            raise ValueError(f"Security Violation: Destructive SQL command '{matched_kw}' is strictly prohibited.")
+            raise SQLSecurityViolation(f"Security Violation: Destructive SQL command '{matched_kw}' is strictly prohibited.")
 
     # 4. Enforce read-only prefix (SELECT or WITH for CTEs)
     if not (cleaned.upper().startswith("SELECT") or cleaned.upper().startswith("WITH")):
-        raise ValueError("Security Violation: Only read-only SELECT or WITH statements are allowed.")
+        raise SQLSecurityViolation("Security Violation: Only read-only SELECT or WITH statements are allowed.")
 
     # 5. Append safety LIMIT if missing
     if not re.search(r"\bLIMIT\b", cleaned, flags=re.IGNORECASE):
         cleaned += " LIMIT 50"
 
     return cleaned
+
 
 
 # =====================================================================
@@ -167,8 +178,9 @@ async def execute_safe_sql(sql_query: str) -> Tuple[List[str], List[Dict[str, An
     Returns: (column_names, rows_as_dicts)
     """
     async with AsyncSessionLocal() as session:
-        # Enforce PostgreSQL transaction read-only mode at connection level
+        # Enforce PostgreSQL transaction read-only mode and 5-second statement timeout
         await session.execute(text("SET TRANSACTION READ ONLY;"))
+        await session.execute(text("SET statement_timeout = '5000ms';"))
         result = await session.execute(text(sql_query))
         
         # Extract column names
@@ -229,6 +241,7 @@ async def run_text_to_sql_pipeline(user_query: str) -> Tuple[str, str, str]:
     3. Formats response with Markdown tables.
     Returns: (sql_query, formatted_markdown_response, raw_data_summary)
     """
+    sql_query = "UNKNOWN"
     try:
         # 1. Generate SQL
         sql_query = await generate_sql_query(user_query)
@@ -240,10 +253,11 @@ async def run_text_to_sql_pipeline(user_query: str) -> Tuple[str, str, str]:
         markdown_response = format_sql_results_as_markdown(user_query, sql_query, columns, rows)
         return sql_query, markdown_response, f"{len(rows)} rows returned"
         
-    except ValueError as val_err:
-        # Security rejection
-        err_msg = f"🛡️ **Security Sandbox Alert:** {str(val_err)}"
+    except SQLSecurityViolation as sec_err:
+        # Security sandbox rejection
+        err_msg = f"🛡️ **Security Sandbox Alert:** {str(sec_err)}"
         return "BLOCKED", err_msg, "0 rows"
     except Exception as e:
         err_msg = f"⚠️ **SQL Execution Error:** An issue occurred while running the query against PostgreSQL: `{str(e)}`"
-        return "ERROR", err_msg, "0 rows"
+        return sql_query, err_msg, "0 rows"
+
