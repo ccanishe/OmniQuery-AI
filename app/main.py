@@ -80,23 +80,27 @@ async def handle_query(request: QueryRequest):
 async def stream_query(request: QueryRequest):
     """Server-Sent Events (SSE) streaming endpoint for real-time token delivery."""
     async def token_generator():
-        initial_state = {
-            "query": request.query,
-            "query_type": None,
-            "retrieved_chunks": None,
-            "sql_query": None,
-            "sql_result": None,
-            "response": None
-        }
-        
-        result = await agent_app.ainvoke(initial_state)
-        response_text = result.get("response", "")
-
-        
-        # Stream response chunk-by-chunk
-        words = response_text.split(" ")
-        for word in words:
-            yield f"data: {word} \n\n"
-            await asyncio.sleep(0.05)
+        try:
+            initial_state = {
+                "query": request.query,
+                "query_type": None,
+                "retrieved_chunks": None,
+                "sql_query": None,
+                "sql_result": None,
+                "response": None
+            }
+            
+            result = await agent_app.ainvoke(initial_state)
+            response_text = result.get("response", "")
+            
+            # Stream response chunk-by-chunk
+            words = response_text.split(" ")
+            for word in words:
+                yield f"data: {word} \n\n"
+                await asyncio.sleep(0.05)
+        except Exception as e:
+            print(f"[SECURITY ALERT] Streaming exception: {e}")
+            yield "event: error\ndata: ⚠️ An error occurred while generating your response. Please try again.\n\n"
             
     return StreamingResponse(token_generator(), media_type="text/event-stream")
+

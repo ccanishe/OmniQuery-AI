@@ -86,9 +86,10 @@ def test_format_context_passages_empty():
     assert "No relevant documents found" in formatted
 
 
-def test_synthesizer_zero_context_fallback():
+@pytest.mark.asyncio
+async def test_synthesizer_zero_context_fallback():
     """Verifies that when 0 chunks are found, synthesizer returns a safe, unhallucinated refusal."""
-    response = asyncio.run(synthesize_answer("What is the secret launch date?", chunks=[]))
+    response = await synthesize_answer("What is the secret launch date?", chunks=[])
     assert "could not find any relevant information" in response.lower()
 
 
@@ -118,3 +119,56 @@ def test_router_ambiguous_cross_domain_query():
     ambiguous = "Explain the total order policy for remote employees"
     state = classify_intent_node({"query": ambiguous, "query_type": None})
     assert state["query_type"] in ["rag", "sql"]
+
+
+def test_router_avoids_substring_collisions():
+    """Verifies router doesn't trigger on substring collisions like 'fromage' or 'borders'."""
+    state_fromage = classify_intent_node({"query": "Tell me about French fromage", "query_type": None})
+    assert state_fromage["query_type"] == "direct"
+
+    state_borders = classify_intent_node({"query": "What are the borders of Texas?", "query_type": None})
+    assert state_borders["query_type"] == "direct"
+
+
+# =====================================================================
+# 5. FastAPI Ingress & Pydantic Validation Tests
+# =====================================================================
+
+def test_api_empty_query_returns_422():
+    """Verifies that empty or whitespace query returns 422 Unprocessable Entity."""
+    from fastapi.testclient import TestClient
+    from app.main import app
+    client = TestClient(app)
+
+    res_empty = client.post("/api/v1/query", json={"query": ""})
+    assert res_empty.status_code == 422
+
+    res_spaces = client.post("/api/v1/query", json={"query": "    "})
+    assert res_spaces.status_code == 422
+    assert "cannot be empty" in res_spaces.text
+
+
+def test_api_oversized_query_returns_422():
+    """Verifies that query exceeding 1000 characters is rejected with 422."""
+    from fastapi.testclient import TestClient
+    from app.main import app
+    client = TestClient(app)
+
+    oversized = "a" * 1001
+    res = client.post("/api/v1/query", json={"query": oversized})
+    assert res.status_code == 422
+
+
+def test_api_valid_query_structure():
+    """Verifies that a valid conversational query returns 200 with proper QueryResponse structure."""
+    from fastapi.testclient import TestClient
+    from app.main import app
+    client = TestClient(app)
+
+    res = client.post("/api/v1/query", json={"query": "Hello"})
+    assert res.status_code == 200
+    data = res.json()
+    assert data["query"] == "Hello"
+    assert "route_selected" in data
+    assert "response" in data
+

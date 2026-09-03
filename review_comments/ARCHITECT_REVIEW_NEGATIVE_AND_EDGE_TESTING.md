@@ -247,6 +247,36 @@ When interviewing for **Senior GenAI Engineer / LLM Application Engineer (Track 
 
 ---
 
-## 🏁 Final Recommendation
+## 🏁 Final Recommendation & Verification Status
 
-**Approved for Merge.** The engineering practices demonstrated in `feature/negative-and-edge-testing` elevate the maturity of the OmniQuery-AI platform. Canishe can resolve the 4 minor architectural refinements in an upcoming sprint.
+**Status:** **FULLY IMPLEMENTED & MERGED INTO BRANCH** 🚀
+
+All 4 Senior Architect recommendations have been directly implemented and verified:
+1. ✅ **Regex Word-Boundary Intent Matching:** Added `matches_keyword` in `app/agents/router.py` with `\b` boundary enforcement to prevent substring false positives (`"fromage"`, `"borders"`).
+2. ✅ **SSE Streaming Exception Boundary:** Wrapped `token_generator()` in `app/main.py` with `try...except Exception` logging and yielding an explicit `event: error` frame.
+3. ✅ **FastAPI Gateway Pydantic Tests:** Added 3 integration tests in `tests/test_edge_and_negative_cases.py` using `fastapi.testclient.TestClient` verifying HTTP 422 for empty queries and 1000+ char overflows.
+4. ✅ **Asynchronous Test Standard:** Standardized `test_synthesizer_zero_context_fallback` using native `@pytest.mark.asyncio` and `await`. Added `pytest-asyncio` to `requirements.txt`.
+
+### 🧪 Full Regression Verification
+```text
+============================= 18 passed in 3.35s =============================
+tests/test_edge_and_negative_cases.py::test_rrf_empty_lists PASSED       [  5%]
+tests/test_edge_and_negative_cases.py::test_rrf_asymmetric_dense_only PASSED [ 11%]
+tests/test_edge_and_negative_cases.py::test_rrf_asymmetric_sparse_only PASSED [ 16%]
+tests/test_edge_and_negative_cases.py::test_reranker_empty_candidates PASSED [ 22%]
+tests/test_edge_and_negative_cases.py::test_reranker_corrupt_or_missing_metadata PASSED [ 27%]
+tests/test_edge_and_negative_cases.py::test_format_context_passages_empty PASSED [ 33%]
+tests/test_edge_and_negative_cases.py::test_synthesizer_zero_context_fallback PASSED [ 38%]
+tests/test_edge_and_negative_cases.py::test_router_empty_and_whitespace_query PASSED [ 44%]
+tests/test_edge_and_negative_cases.py::test_router_sql_injection_adversarial_string PASSED [ 50%]
+tests/test_edge_and_negative_cases.py::test_router_ambiguous_cross_domain_query PASSED [ 55%]
+tests/test_edge_and_negative_cases.py::test_router_avoids_substring_collisions PASSED [ 61%]
+tests/test_edge_and_negative_cases.py::test_api_empty_query_returns_422 PASSED [ 66%]
+tests/test_edge_and_negative_cases.py::test_api_oversized_query_returns_422 PASSED [ 72%]
+tests/test_edge_and_negative_cases.py::test_api_valid_query_structure PASSED [ 77%]
+tests/test_hybrid_rag.py::test_chunk_documents PASSED                    [ 83%]
+tests/test_hybrid_rag.py::test_reciprocal_rank_fusion PASSED             [ 88%]
+tests/test_hybrid_rag.py::test_reranker_passages PASSED                  [ 94%]
+tests/test_hybrid_rag.py::test_langgraph_intent_router PASSED            [100%]
+```
+

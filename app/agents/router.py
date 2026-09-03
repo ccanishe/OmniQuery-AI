@@ -6,6 +6,7 @@ Determines whether a user query is:
 3. Direct Synthesis / Conversation
 """
 
+import re
 from typing import TypedDict, Literal, Optional, List, Dict, Any
 from langgraph.graph import StateGraph, END
 from app.rag.hybrid_retriever import retrieve_context
@@ -43,14 +44,21 @@ def classify_intent_node(state: AgentState) -> AgentState:
         "documentation", "steps to", "reimbursement", "allowance", "mfa", "sla", "warranty", "err_"
     ]
     
-    if any(k in query for k in sql_keywords):
+    def matches_keyword(pattern: str, text: str) -> bool:
+        # If pattern ends with an underscore (like prefix err_), match without trailing boundary
+        if pattern.endswith("_"):
+            return bool(re.search(r"\b" + re.escape(pattern), text))
+        return bool(re.search(r"\b" + re.escape(pattern) + r"\b", text))
+
+    if any(matches_keyword(k, query) for k in sql_keywords):
         state["query_type"] = "sql"
-    elif any(k in query for k in doc_keywords):
+    elif any(matches_keyword(k, query) for k in doc_keywords):
         state["query_type"] = "rag"
     else:
         state["query_type"] = "direct"
         
     return state
+
 
 
 def route_query(state: AgentState) -> str:
