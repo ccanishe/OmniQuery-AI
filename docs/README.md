@@ -69,8 +69,10 @@ flowchart TD
 | **11** | **RRF Math & Worked Examples** | Why raw scores cannot be added, mathematical derivation of $\frac{1}{k+\text{rank}}$, why $k=60$ works, and a 4-document numerical walkthrough. | [11_CONCEPT_RECIPROCAL_RANK_FUSION_WORKED_EXAMPLES.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/11_CONCEPT_RECIPROCAL_RANK_FUSION_WORKED_EXAMPLES.md) |
 | **12** | **Enterprise PDF Ingestion & Dual Indexing** | Page-by-page parsing, 500/50 token chunking, 384-d `all-MiniLM-L6-v2` embeddings, and dual `vector(384)` + `tsvector` PostgreSQL storage. | [12_CONCEPT_PDF_INGESTION_AND_DUAL_INDEXING.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/12_CONCEPT_PDF_INGESTION_AND_DUAL_INDEXING.md) |
 | **13** | **Dual-Engine Generation & Graceful Degradation** | Combining stochastic LLMs (Gemini 1.5 Flash) with deterministic heuristics for 99.9% uptime, $0.00 test automation, and zero vendor lock-in. | [13_CONCEPT_DUAL_ENGINE_GENERATION_AND_GRACEFUL_DEGRADATION.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/13_CONCEPT_DUAL_ENGINE_GENERATION_AND_GRACEFUL_DEGRADATION.md) |
+| **14** | **Human-AI Trust & Silent Degradation** | Avoiding the silent degradation trap: Provenance Badging, Multi-Model Circuit Breakers (Groq Llama 3.1), Semantic Caching, and Guided Refusals. | [14_CONCEPT_HUMAN_AI_TRUST_AND_SILENT_DEGRADATION.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/14_CONCEPT_HUMAN_AI_TRUST_AND_SILENT_DEGRADATION.md) |
 
 ---
+
 
 ## 🎯 High-Level Architecture, Retrospectives & Reviews
 

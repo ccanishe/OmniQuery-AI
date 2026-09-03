@@ -218,3 +218,5 @@ This is one of the highest-yield architectural topics in technical interviews at
 1. **Log Every Fallback Event:** Always log `[SQL AGENT] Fallback triggered` to observability tools (Datadog, Prometheus, LangSmith) to track cloud LLM error rates.
 2. **Mine Query Logs to Expand Heuristics:** Analyze user query logs weekly. Add the top 10 most common business questions to the deterministic engine to save API costs.
 3. **Never Bypass the Sandbox:** Always run both LLM-generated and rule-generated queries through the same security validator.
+4. **Avoid the Silent Degradation Trap:** Never downgrade silently without informing the user. See **[14_CONCEPT_HUMAN_AI_TRUST_AND_SILENT_DEGRADATION.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/docs/14_CONCEPT_HUMAN_AI_TRUST_AND_SILENT_DEGRADATION.md)** for provenance badging, multi-LLM cascading, and semantic caching strategies.
+
