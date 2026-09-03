@@ -44,6 +44,9 @@ async def synthesize_answer(query: str, chunks: List[Dict[str, Any]]) -> str:
     """
     Generates a grounded response using Gemini API, Ollama, or fallback generator.
     """
+    if not chunks:
+        return "I could not find any relevant information in the enterprise knowledge base for your query."
+
     context_str = format_context_passages(chunks)
 
     # Check for Gemini API key
@@ -58,10 +61,6 @@ async def synthesize_answer(query: str, chunks: List[Dict[str, Any]]) -> str:
             return response.text
         except Exception as e:
             print(f"Gemini API generation error: {e}")
-
-    # Fallback to structured extractive answer if LLM key is not configured locally
-    if not chunks:
-        return "I could not find any relevant information in the enterprise knowledge base for your query."
 
     top_chunk = chunks[0]
     doc_name = top_chunk.get("document_name", "Enterprise Document")

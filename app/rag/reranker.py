@@ -48,12 +48,14 @@ def rerank_passages(
         # Fallback to top fused results if ranker unavailable
         return candidates[:top_n]
 
-    # Format passages for FlashRank
+    # Format passages for FlashRank safely
     passages = []
     for idx, doc in enumerate(candidates):
+        raw_content = doc.get("content")
+        text_content = str(raw_content).strip() if raw_content is not None else ""
         passages.append({
             "id": doc.get("id", idx),
-            "text": doc.get("content", ""),
+            "text": text_content,
             "meta": doc
         })
 
