@@ -76,7 +76,9 @@ flowchart TD
 
 ## 🎯 High-Level Architecture, Retrospectives & Reviews
 
-* **Canishe's Week 3 Action Plan (RAGAS Evaluation):** [CANISHE_ACTION_PLAN_WEEK_3_RAGAS_EVALUATION.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/CANISHE_ACTION_PLAN_WEEK_3_RAGAS_EVALUATION.md)
+* **RAGAS Benchmark Quality Scorecard:** [RAGAS_BENCHMARK_SCORECARD.md](file:///C:/Users/DELL/Personal/Projects/OmniQuery-AI/docs/RAGAS_BENCHMARK_SCORECARD.md)
+* **Master GenAI Interview Question Bank:** [INTERVIEW_QUESTION_BANK.md](file:///C:/Users/DELL/Personal/Projects/OmniQuery-AI/docs/INTERVIEW_QUESTION_BANK.md)
+* **Canishe's Week 3 Action Plan (RAGAS Evaluation):** [CANISHE_ACTION_PLAN_WEEK_3_RAGAS_EVALUATION.md](file:///C:/Users/DELL/Personal/Projects/OmniQuery-AI/CANISHE_ACTION_PLAN_WEEK_3_RAGAS_EVALUATION.md)
 * **Canishe's Week 2 Retrospective & AGY Mastery Guide:** [CANISHE_WEEK_2_RETROSPECTIVE_AND_AGY_MASTERY_GUIDE.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/CANISHE_WEEK_2_RETROSPECTIVE_AND_AGY_MASTERY_GUIDE.md)
 * **Architect Review: Negative & Edge Testing:** [ARCHITECT_REVIEW_NEGATIVE_AND_EDGE_TESTING.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/review_comments/ARCHITECT_REVIEW_NEGATIVE_AND_EDGE_TESTING.md)
 * **Architect Review: Text-to-SQL Copilot Engine:** [ARCHITECT_REVIEW_TEXT_TO_SQL_COPILOT.md](file:///Users/jnarayanassamy/personal/ai/canishe/OmniQuery-AI/review_comments/ARCHITECT_REVIEW_TEXT_TO_SQL_COPILOT.md)
